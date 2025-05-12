@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-public class Obstacle : MonoBehaviour 
 
-private void OnCollisionEnter2D(Collision2D collision)
+public class Obstacle : MonoBehaviour
 {
-    if (collision.gameObject == Hero.Instance.gameObject)
+    [SerializeField] private int _damage;
+    
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        Hero.Instance.GetDamage();
+        if (other.gameObject.TryGetComponent<IDamageable>(out var damageable))
+        {
+            damageable.Damage(_damage);
+        }
     }
 }
