@@ -8,10 +8,15 @@ namespace Hero
     {
         private HeroConfig _heroConfig;
         private HeroCharacter _heroCharacter;
+
+        private int _health;
+        
         public void Init(HeroConfig heroConfig, HeroCharacter heroCharacter)
         {
             _heroCharacter = heroCharacter;
             _heroConfig = heroConfig;
+
+            _health = heroConfig.Lives;
         }
 
         private void Update()
@@ -25,7 +30,19 @@ namespace Hero
         
         public void Damage(int value)
         {
-            Debug.Log($"damage {value}");
+            if (value <= 0) return;
+            _health -= value;
+            if (_health <= 0)
+            {
+                Kill();
+            }
         }
+
+        public void Kill()
+        {
+            Debug.Log("Kill");
+        }
+        
+        
     }
 }
